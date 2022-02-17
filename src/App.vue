@@ -1,9 +1,12 @@
 <script setup>
-import { ref } from 'vue';
-
+import { nextTick, onMounted, ref, watch } from 'vue';
+import Draggable from 'draggable';
 
   const showModal = ref(false)
   const weight = ref(50)
+  const modal1 = ref()
+  const modal2 = ref()
+  const modal2Draggable = ref()
 
   const calculate = () => {
     showModal.value = true
@@ -16,13 +19,35 @@ import { ref } from 'vue';
   const nio = () => {
     alert("Ño")
   }
+
+  watch(showModal, async () => {
+    if (showModal.value) {
+        await nextTick()
+
+        modal2Draggable.value =  new Draggable (modal2.value, {
+          handle: modal2.value.querySelector('#modal2-header'),
+          filterTarget: (target) => {
+            return target.tagName !== 'BUTTON' && target.closest('button') === null
+          }
+        });
+    } else {
+        modal2Draggable.value.destroy()
+    }
+    
+  })
+
+  onMounted(() => {
+    new Draggable (modal1.value, {
+      handle: modal1.value.querySelector('#modal1-header')
+    });
+  }) 
 </script>
 
 <template>
   <div class="h-screen w-screen bg-gray-50 top-0 left-0 flex flex-col justify-end main bg-cover">
     <div class="h-screen w-screen  flex items-center justify-center absolute top-0 left-0">
-        <div v-if="!showModal" class="flex flex-col mx-auto border shadow bg-gray-100 z-10">
-            <div class="flex bg-white p-3 justify-between">
+        <div ref="modal1" class="flex flex-col mx-auto border shadow bg-gray-100 z-10">
+            <div id="modal1-header" class="flex bg-white p-3 justify-between cursor-pointer">
               <span class="flex space-x-2">
                 <span>🥛</span>
                 <span class="text-gray-600">Calculador de peso</span>
@@ -57,8 +82,8 @@ import { ref } from 'vue';
             </div>
         </div>
 
-        <div v-else class="flex flex-col mx-auto border shadow bg-gray-100 z-20">
-          <div class="flex bg-white p-3 flex-col space-y-4">
+        <div v-if="showModal" ref="modal2" class="flex flex-col mx-auto border shadow bg-gray-100 z-20">
+          <div id="modal2-header"  class="flex bg-white p-3 flex-col space-y-4">
             <div class="flex justify-between">
               <span class="text-gray-600">Resultado</span>
               
