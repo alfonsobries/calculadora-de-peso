@@ -41,7 +41,7 @@ import { ref } from 'vue';
                   Introduce tu peso:
                 </label>
 
-                <input v-model="weight" type="text" class="border border-gray-200 px-3 py-1" />
+                <input v-model="weight" type="number" class="border border-gray-200 px-3 py-1" />
 
                 <span>
                   kg
