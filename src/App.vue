@@ -17,7 +17,7 @@ const closeResult = () => {
 };
 
 const nio = () => {
-  alert("Ño");
+  alert("Noup");
 };
 
 watch(showModal, async () => {
@@ -112,7 +112,7 @@ onMounted(() => {
       >
         <div id="modal2-header" class="flex bg-white p-3 flex-col space-y-4">
           <div class="flex justify-between">
-            <span class="text-gray-600">Resultado</span>
+            <span class="text-gray-600">Result</span>
 
             <button
               type="button"
